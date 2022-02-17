@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--https://lh3.googleusercontent.com/tv7J2o4ZiSmLYwyBslBs_PLzKyzI8QUV5qdvHGfoAQn9r7pY4Hj5SmW27m3zUWeDtRSE8Cb5_5PQmkbavDfw7XbIL8EodIKZhilRdg=w1064-v0-->
+	<title>Název firmy</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="index.js"></script>
+</head>
+<body>
+	
+	<nav class="navbar">
+		<nav class="navbar_container">
+			<a href="#home" class="logo">
+				Název firmy
+			</a>
+			<div class="navbar_toggle" id="mobile-menu">
+				<span class="bar"></span>
+				<span class="bar"></span>
+				<span class="bar"></span>  	
+			</div>
+			<ul class="navbar_menu">
+				<li class="navbar_item">
+					<a href="#home" class="navbar_links" id="home-page">Home</a>
+				</li>
+				<li class="navbar_item">
+					<a href="#products" class="navbar_links" id="prodcts-page">Products</a>
+				</li>
+				<li class="navbar_item">
+					<a href="#about" class="navbar_links" id="about-page">About</a>
+				</li>
+				<li class="navbar_item">
+					<a href="#contact" class="navbar_links" id="contact-page">Contact</a>
+				</li>
+				<li class="navbar_btn">
+					<a href="#share" class="button" id="share-page">Share</a>
+				</li>
+			</ul>
+		</nav>
+	</nav>
+
+	<button onclick="test()" type="button" id="btnTest">Hello</button>
+	<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
+    
+    <script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyDenUZfgI0Z5Vcw8v8PyxpkPx4cxxJK6TU",
+			authDomain: "schoolstuff-b9150.firebaseapp.com",
+			databaseURL: "https://schoolstuff-b9150-default-rtdb.europe-west1.firebasedatabase.app/",
+			projectId: "schoolstuff-b9150",
+			storageBucket: "schoolstuff-b9150.appspot.com",
+			messagingSenderId: "492506681866",
+			appId: "1:492506681866:web:42dc31c7a69984688445f3"
+	};
+
+		firebase.initializeApp(firebaseConfig);
+
+		// https://www.geeksforgeeks.org/create-a-website-using-html-css-and-javascript-that-stores-data-in-firebase/
+		var messagesRef = firebase.database().ref("data/" + "test");
+
+		// var ref = messagesRef.push();
+
+		var newMessageRef = messagesRef.push();
+            newMessageRef.update({
+                name: "name",
+                email: "email",
+            });
+	</script>
+</body>
+</html>
