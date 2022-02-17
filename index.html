@@ -12,7 +12,7 @@
 			ChatMe
 		</h1>
 		<h1 class="signInButton">
-			RP
+			Made by Richard Pavlikán
 		</h1>
 		<div style="text-align: center; padding:5px;">
 			<a
@@ -23,19 +23,46 @@
 		</div>
 	</div>
 
+	<div class="wrapper">
+		<div class="loginForm">
+			
+			<div class="insideLogin">
+				<form class="login">
+					<div class="field">
+						<input type="text" name="signUsername" id="signUsername" placeholder="Username">
+					</div>
+					<div class="field">
+						<input type="password" placeholder="Password" name="password" id="password">
+					</div>
+					<div class="field btn">
+						<div class="btn-layer"></div>
+						<input type="button" value="Login" onclick="signIn()">
+					</div>
+					<div class="field btn">
+						<div class="btn-layer"></div>
+						<input onclick="signUp()" value="or Sign Up" type="button">
+					</div>
+					<p id="signUpText" style="color:red;"></p>
+				</form>
+			</div>
+			
+		</div>
+	</div>
 
-	<p>Username: </p>
-	<input type="text" name="username" id="username">
-	<p>Message: </p>
-	<input type="text" name="messageBox" id="messageBox">
-	<a onclick="sendMessage()">Send</a>
-
-	<ul id="messages"></ul>
 	
 
+	<div class="messagesBody">
+		<div class="messageBox">
+			<input type="text" name="messageBox" id="messageBox" class="input">
+			<a onclick="sendMessage()">Send</a>
+		</div>
+		<ul id="messages" class="messages"></ul>
+	</div>
+	
 
 	<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-firestore.js"></script>
     <script>
 		const firebaseConfig = {
 			apiKey: "AIzaSyDenUZfgI0Z5Vcw8v8PyxpkPx4cxxJK6TU",
@@ -49,33 +76,86 @@
 
 		firebase.initializeApp(firebaseConfig);
 
+
+		var firestore = firebase.firestore();
+		var username = "unknown";
+
+		async function signIn(){
+			var signInUsername = document.getElementById("signUsername").value;
+			var getPassword = document.getElementById("password").value;
+			await firestore.collection("users")
+			.get().then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					if(doc.data().name == signInUsername && doc.data().password == getPassword){
+						console.log(`${doc.id} => ${doc.data().password}`);
+						username = doc.data().name;
+					}
+				});
+			});
+
+			if(username == "unknown"){
+				document.getElementById("signUpText").innerHTML = "Check your username and password";
+			}else{
+				document.getElementById("signUpText").innerHTML = "Signed In";
+			}
+		}
+
+		async function signUp() {
+			var signInUsername = document.getElementById("signUsername").value;
+			var getPassword = document.getElementById("password").value;
+			var canUse = true;
+
+			await firestore.collection("users")
+			.get().then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					if(doc.data().name == signInUsername){
+						canUse = false;
+						console.log("false");
+					}
+				});
+			});
+
+			if(canUse){
+				firestore.collection("users").add({
+					name: signInUsername,
+					password: getPassword,
+				});
+				document.getElementById("signUpText").innerHTML = "Signing Up Succesful, now sign in!";
+			}else{
+				document.getElementById("signUpText").innerHTML = "Username already in use";
+			}
+		}
+
+
 		// https://www.geeksforgeeks.org/create-a-website-using-html-css-and-javascript-that-stores-data-in-firebase/
 		var messagesRef = firebase.database().ref("data");
 
 		function sendMessage(){
-			var username = document.getElementById("username").value;
-			var message = document.getElementById("messageBox").value;
-			var timeNow = Date.now();
-			
-			document
-    			.getElementById("messages")
-    			.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+			if(username != "unknown"){
+				var message = document.getElementById("messageBox").value;
+				var timeNow = Date.now();
+				
+				document
+					.getElementById("messages")
+					.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 
-			var messagesRef = firebase.database().ref("data/" + timeNow);
-			messagesRef.set({
-				name: username,
-				message: message,
-				time: timeNow
-			});
-
-			document.getElementById("messageBox").value = "";
+				var messagesRef = firebase.database().ref("data/" + timeNow);
+				messagesRef.set({
+					name: username,
+					message: message,
+					time: timeNow
+				});
+				document.getElementById("messageBox").value = "";
+			}else{
+				document.getElementById("signUpText").innerHTML = "To post messages please sign in";
+			}
 		}
 
 		chat = firebase.database().ref("data/");
 		chat.on("child_added", function (snap){
 			const _newMessages = snap.val();
-			const newMessage = `<li><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
-  			document.getElementById("messages").innerHTML += newMessage;
+			const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
+  			document.getElementById("messages").innerHTML = newMessage + document.getElementById("messages").innerHTML;
 		});
 
 			
