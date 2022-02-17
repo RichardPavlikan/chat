@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--https://lh3.googleusercontent.com/tv7J2o4ZiSmLYwyBslBs_PLzKyzI8QUV5qdvHGfoAQn9r7pY4Hj5SmW27m3zUWeDtRSE8Cb5_5PQmkbavDfw7XbIL8EodIKZhilRdg=w1064-v0-->
-	<title>Název firmy</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="index.js"></script>
+	<!--https://cdn.statically.io/img/gingersauce.co/wp-content/uploads/2020/11/pasted-image-0-11-2-1024x462.png?f=auto-->
+	<title>ChatMe</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="module"src="index.js"></script>
 </head>
 <body>
-	
-	<nav class="navbar">
-		<nav class="navbar_container">
-			<a href="#home" class="logo">
-				Název firmy
+	<div class="navbar">
+		<h1 class="name">
+			ChatMe
+		</h1>
+		<h1 class="signInButton">
+			RP
+		</h1>
+		<div style="text-align: center; padding:5px;">
+			<a
+			target="_blank"
+			href="https://memegenerator.net/img/instances/75469088/you-cant-have-a-data-breach-if-you-dont-secure-your-data.jpg">
+			We care about your data	
 			</a>
-			<div class="navbar_toggle" id="mobile-menu">
-				<span class="bar"></span>
-				<span class="bar"></span>
-				<span class="bar"></span>  	
-			</div>
-			<ul class="navbar_menu">
-				<li class="navbar_item">
-					<a href="#home" class="navbar_links" id="home-page">Home</a>
-				</li>
-				<li class="navbar_item">
-					<a href="#products" class="navbar_links" id="prodcts-page">Products</a>
-				</li>
-				<li class="navbar_item">
-					<a href="#about" class="navbar_links" id="about-page">About</a>
-				</li>
-				<li class="navbar_item">
-					<a href="#contact" class="navbar_links" id="contact-page">Contact</a>
-				</li>
-				<li class="navbar_btn">
-					<a href="#share" class="button" id="share-page">Share</a>
-				</li>
-			</ul>
-		</nav>
-	</nav>
+		</div>
+	</div>
 
-	<button onclick="test()" type="button" id="btnTest">Hello</button>
+
+	<p>Username: </p>
+	<input type="text" name="username" id="username">
+	<p>Message: </p>
+	<input type="text" name="messageBox" id="messageBox">
+	<a onclick="sendMessage()">Send</a>
+
+	<ul id="messages"></ul>
+	
+
+
 	<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
-    
     <script>
 		const firebaseConfig = {
 			apiKey: "AIzaSyDenUZfgI0Z5Vcw8v8PyxpkPx4cxxJK6TU",
@@ -51,20 +45,40 @@
 			storageBucket: "schoolstuff-b9150.appspot.com",
 			messagingSenderId: "492506681866",
 			appId: "1:492506681866:web:42dc31c7a69984688445f3"
-	};
+		};
 
 		firebase.initializeApp(firebaseConfig);
 
 		// https://www.geeksforgeeks.org/create-a-website-using-html-css-and-javascript-that-stores-data-in-firebase/
-		var messagesRef = firebase.database().ref("data/" + "test");
+		var messagesRef = firebase.database().ref("data");
 
-		// var ref = messagesRef.push();
+		function sendMessage(){
+			var username = document.getElementById("username").value;
+			var message = document.getElementById("messageBox").value;
+			var timeNow = Date.now();
+			
+			document
+    			.getElementById("messages")
+    			.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 
-		var newMessageRef = messagesRef.push();
-            newMessageRef.update({
-                name: "name",
-                email: "email",
-            });
+			var messagesRef = firebase.database().ref("data/" + timeNow);
+			messagesRef.set({
+				name: username,
+				message: message,
+				time: timeNow
+			});
+
+			document.getElementById("messageBox").value = "";
+		}
+
+		chat = firebase.database().ref("data/");
+		chat.on("child_added", function (snap){
+			const _newMessages = snap.val();
+			const newMessage = `<li><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
+  			document.getElementById("messages").innerHTML += newMessage;
+		});
+
+			
 	</script>
 </body>
 </html>
