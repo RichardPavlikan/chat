@@ -30,21 +30,32 @@
     text-align: center;
 }
 
+
 .messages{
-    text-align: left;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: normal;
+  text-align: left;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: normal;
 }
 
 .messagesBody{
-    text-align: center;
-    float: right;
-    padding-right: 25%;
-    padding-top: 1%;
+  width: 50%;
+  text-align: center;
+  float:right;
+  padding-right:20%;
+  padding-top: 1%;
 }
 
 .messageBox{
     text-align: left;
+}
+
+li{
+  list-style-type: none;
+  margin-bottom: 10px;
+  background-color: rgb(247, 247, 247);
+  padding: 5px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .messageBox .input {

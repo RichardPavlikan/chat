@@ -18,7 +18,7 @@
 			<a
 			target="_blank"
 			href="https://memegenerator.net/img/instances/75469088/you-cant-have-a-data-breach-if-you-dont-secure-your-data.jpg">
-			We care about your data	
+			We "care" about your data
 			</a>
 		</div>
 	</div>
@@ -135,9 +135,7 @@
 				var message = document.getElementById("messageBox").value;
 				var timeNow = Date.now();
 				
-				document
-					.getElementById("messages")
-					.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+				
 
 				var messagesRef = firebase.database().ref("data/" + timeNow);
 				messagesRef.set({
