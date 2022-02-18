@@ -43,6 +43,13 @@
 						<input onclick="signUp()" value="or Sign Up" type="button">
 					</div>
 					<p id="signUpText" style="color:red;"></p>
+					<div class="field">
+						<input type="room" placeholder="room" name="room" id="room">
+					</div>
+					<div class="field btn">
+						<div class="btn-layer"></div>
+						<input onclick="joinRoom()" value="Join room" type="button">
+					</div>
 				</form>
 			</div>
 			
@@ -79,6 +86,7 @@
 
 		var firestore = firebase.firestore();
 		var username = "unknown";
+		var roomId = "data";
 
 		async function signIn(){
 			var signInUsername = document.getElementById("signUsername").value;
@@ -137,7 +145,7 @@
 				
 				
 
-				var messagesRef = firebase.database().ref("data/" + timeNow);
+				var messagesRef = firebase.database().ref(roomId +"/" + timeNow);
 				messagesRef.set({
 					name: username,
 					message: message,
@@ -149,7 +157,24 @@
 			}
 		}
 
-		chat = firebase.database().ref("data/");
+		function joinRoom(){
+			roomId = document.getElementById("room").value;
+			if(roomId == ""){
+				roomId = "data";
+			}
+
+			
+			document.getElementById("messages").innerHTML = "";
+
+			chat = firebase.database().ref(roomId + "/");
+		chat.on("child_added", function (snap){
+			const _newMessages = snap.val();
+			const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
+  			document.getElementById("messages").innerHTML = newMessage + document.getElementById("messages").innerHTML;
+		});
+		}
+		
+		chat = firebase.database().ref(roomId + "/");
 		chat.on("child_added", function (snap){
 			const _newMessages = snap.val();
 			const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
