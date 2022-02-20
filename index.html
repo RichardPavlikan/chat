@@ -4,7 +4,6 @@
 	<!--https://cdn.statically.io/img/gingersauce.co/wp-content/uploads/2020/11/pasted-image-0-11-2-1024x462.png?f=auto-->
 	<title>ChatMe</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
-	<script type="module"src="index.js"></script>
 </head>
 <body>
 	<!--
@@ -151,8 +150,6 @@
 			if(username != "unknown"){
 				var message = document.getElementById("messageBox").value;
 				var timeNow = Date.now();
-				
-				
 
 				var messagesRef = firebase.database().ref(roomId +"/" + timeNow);
 				messagesRef.set({
@@ -171,17 +168,37 @@
 			if(roomId == ""){
 				roomId = "data";
 			}
-
 			
 			document.getElementById("messages").innerHTML = "";
-
 			chat = firebase.database().ref(roomId + "/");
-		chat.on("child_added", function (snap){
+			
+			// .get().then(function (snap)
+			// 	{
+					
+			// 		const _newMessages = snap.val();
+			// 		console.log(snap.name);
+			// const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
+  			// document.getElementById("messages").innerHTML = newMessage; //+ document.getElementById("messages").innerHTML;
+			// 	}	
+			// );
+
+
+
+			chat.on("child_added", function (snap) {
+				const _newMessages = snap.val();
+				const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
+  				document.getElementById("messages").innerHTML = newMessage + document.getElementById("messages").innerHTML;
+			});
+
+			/*chat = firebase.database().ref(roomId + "/");
+			chat.on("child_added", function (snap){
 			const _newMessages = snap.val();
 			const newMessage = `<li class="messages"><span>${_newMessages.name}: </span>${_newMessages.message}</li>`;
   			document.getElementById("messages").innerHTML = newMessage + document.getElementById("messages").innerHTML;
-		});
+		});*/
 		}
+
+
 		
 		chat = firebase.database().ref(roomId + "/");
 		chat.on("child_added", function (snap){
