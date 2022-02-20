@@ -9,13 +9,35 @@
     font-size: 40px;
     text-align: center;
     font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
-    color: #F3C677;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #fdbedb;
     padding: 1%;
 }
 
+.newNavBar{
+  display:flex;
+}
+
+.newNavBar li{
+  list-style-type:none;
+  padding: 5px;
+  text-align: center;
+}
+
+.newNavBar a{
+  color: #fc83bb;;
+}
+
+.newNavBar a:hover{
+  color: #fa4299;
+}
+
+.newNavBar a:visited{
+  color: #fc83bb;
+}
+
 .navbar{
-    background-color: #0C0A3E;
+    background-color: #a445b2;
 }
 
 .signInButton{
@@ -81,7 +103,7 @@ li{
 
 a:link{text-decoration: none;}
 a:visited{color: white;text-decoration: none;}
-a:hover{color: #F3C677;text-decoration: none;}
+a:hover{color: #f893c2;text-decoration: none;}
 a:active{color:white;text-decoration: none;}
 
 
