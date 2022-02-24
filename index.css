@@ -10,7 +10,7 @@
     text-align: center;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: #fdbedb;
+    color: #03045E;
     padding: 1%;
 }
 
@@ -25,19 +25,19 @@
 }
 
 .newNavBar a{
-  color: #fc83bb;;
+  color: #03045E;;
 }
 
 .newNavBar a:hover{
-  color: #fa4299;
+  color: #00b4d8;
 }
 
 .newNavBar a:visited{
-  color: #fc83bb;
+  color: #03045E;
 }
 
 .navbar{
-    background-color: #a445b2;
+    background-color: #0077b6;
 }
 
 .signInButton{
@@ -103,7 +103,7 @@ li{
 
 a:link{text-decoration: none;}
 a:visited{color: white;text-decoration: none;}
-a:hover{color: #f893c2;text-decoration: none;}
+a:hover{color: #00b4d8;text-decoration: none;}
 a:active{color:white;text-decoration: none;}
 
 
@@ -190,7 +190,7 @@ a:active{color:white;text-decoration: none;}
   }
   .insideLogin form .pass-link a,
   .insideLogin form .signUp-link a{
-    color: #fa4299;
+    color: #0077b6;
     text-decoration: none;
   }
   .insideLogin form .pass-link a:hover,
@@ -210,7 +210,7 @@ a:active{color:white;text-decoration: none;}
     width: 300%;
     position: absolute;
     left: -100%;
-    background: -webkit-linear-gradient(right, #a445b2, #fa4299, #a445b2, #fa4299);
+    background: -webkit-linear-gradient(right, #03045e, #0077b6, #00b4d8, #00d5ff);
     border-radius: 5px;
     transition: all 0.4s ease;;
   }
